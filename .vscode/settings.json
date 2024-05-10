@@ -1,0 +1,13 @@
+{
+    "eslint.validate": [
+      "javascript",
+      "javascriptreact",
+      "typescript"
+    ],
+    "rust-analyzer.linkedProjects": [
+      ".\\rexcel\\Cargo.toml",
+      ".\\rexcel\\Cargo.toml",
+      ".\\rexcel\\Cargo.toml"
+    ]
+  }
+  
