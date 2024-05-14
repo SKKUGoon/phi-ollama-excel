@@ -1,9 +1,11 @@
 import * as React from "react";
 import Header from "./Header";
 import HeroList, { HeroListItem } from "./HeroList";
-import TextInsertion from "./TextInsertion";
 import { makeStyles } from "@fluentui/react-components";
 import { Ribbon24Regular, LockOpen24Regular, DesignIdeas24Regular } from "@fluentui/react-icons";
+import SheetInsertion from "./SheetInsertion";
+import { Provider } from "react-redux";
+import store from "../redux/store/root";
 
 interface AppProps {
   title: string;
@@ -36,9 +38,12 @@ const App = (props: AppProps) => {
 
   return (
     <div className={styles.root}>
-      <Header logo="assets/logo-filled.png" title={props.title} message="Welcome" />
-      <HeroList message="Discover what this add-in can do for you today!" items={listItems} />
-      <TextInsertion />
+      <Provider store={store}>
+        <Header logo="assets/logo-filled.png" title={props.title} message="Welcome" />
+        <HeroList message="Discover what this add-in can do for you today!" items={listItems} />
+        {/* <TextInsertion /> */}
+        <SheetInsertion />
+      </Provider>
     </div>
   );
 };
