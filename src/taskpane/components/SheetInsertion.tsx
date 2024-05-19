@@ -2,7 +2,7 @@
 import * as React from "react";
 import { useState } from "react";
 import { Button, Field, Textarea, tokens, makeStyles } from "@fluentui/react-components";
-import { addSheet } from "../redux/store/model/modelMethod";
+import { addSheet } from "../redux/store/model/modelMethodSheet";
 import { useAppDispatch } from "../redux/store/hook";
 
 const useStyles = makeStyles({

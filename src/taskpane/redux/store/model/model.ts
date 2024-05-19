@@ -9,6 +9,9 @@ export interface ModelState {
   version: string | undefined;
   debugMode: boolean;
 
+  // Excel setup
+  displayLang: string | undefined;
+
   sheets: SheetStatus[];
   currentSheet: SheetStatus | undefined;
   workbookOption: { displayLanguage: string };
@@ -19,6 +22,7 @@ const modelInit: ModelState = {
   model: undefined,
   version: undefined,
   debugMode: true,
+  displayLang: undefined,
   sheets: [],
   currentSheet: undefined,
   workbookOption: { displayLanguage: "EN" },
@@ -36,16 +40,23 @@ export const modelSlice = createSlice({
     debug: (state) => {
       console.log(state);
     },
+    // Excel status actions
+    language: (state) => {
+      const lang = Office.context.displayLanguage;
+      stolog(state, `current display language is ${lang}`);
+      state.displayLang = lang;
+    },
     // Sheet controlling actions
     addSheet: (state, action: PayloadAction<{ name: string }>) => {
       stolog(state, `Adding sheet ${action.payload.name}`);
       state.sheets.push(action.payload);
     },
-    removeSheet: (state, action: PayloadAction<{ name?: string; id?: string }>) => {
-      if (action.payload.name) {
-        stolog(state, `Removing sheet ${action.payload.name}`);
-        state.sheets = state.sheets.filter((sheet) => sheet.name !== action.payload.name);
-      }
+    removeSheet: (state, action: PayloadAction<{ name: string }>) => {
+      stolog(state, `Removing sheet ${action.payload.name}`);
+      state.sheets = state.sheets.filter((sheet) => sheet.name !== action.payload.name);
+    },
+    focusSheet: (state, action: PayloadAction<{ name: string }>) => {
+      stolog(state, `Focused on ${action.payload.name}`);
     },
   },
 });
