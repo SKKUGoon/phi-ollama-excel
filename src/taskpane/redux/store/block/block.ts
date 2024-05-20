@@ -20,7 +20,7 @@ const blockSlice = createSlice({
       state.debugMode = !state.debugMode;
     },
     debug: (state) => {
-      console.log(state);
+      console.log({ ...state });
     },
   },
 });

@@ -3,10 +3,11 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { SheetStatus } from "./dtypes";
 import { AppDispatch, RootState } from "../root";
 import { modelSliceAction } from "./model";
+import { ExcelCellAddress, ExcelRangeAddress, ExcelSheet } from "../../../util/address";
 
 interface SheetPayload {
   context?: Excel.RequestContext;
-  name: string; // Sheet name
+  name: ExcelSheet; // Sheet name
 }
 
 interface UpsertSheetPayload extends SheetPayload {
@@ -16,12 +17,12 @@ interface UpsertSheetPayload extends SheetPayload {
 interface RemoveSheetPayload extends SheetPayload {}
 
 interface FocusSheetPayload extends SheetPayload {
-  address?: string;
+  address?: ExcelRangeAddress | ExcelCellAddress;
 }
 
 const upsertSheetHandler = async (
   context: Excel.RequestContext,
-  name: string,
+  name: ExcelSheet,
   config: { visibility?: Excel.SheetVisibility; tabColor?: string }
 ): Promise<[boolean, SheetStatus]> => {
   try {
@@ -54,7 +55,7 @@ const upsertSheetHandler = async (
   }
 };
 
-const removeSheetHandler = async (context: Excel.RequestContext, name: string): Promise<void> => {
+const removeSheetHandler = async (context: Excel.RequestContext, name: ExcelSheet): Promise<void> => {
   try {
     const worksheets = context.workbook.worksheets;
     worksheets.load("items/name");
@@ -73,7 +74,11 @@ const removeSheetHandler = async (context: Excel.RequestContext, name: string): 
   }
 };
 
-const focusSheetHandler = async (context: Excel.RequestContext, name: string, focusAddr?: string): Promise<void> => {
+const focusSheetHandler = async (
+  context: Excel.RequestContext,
+  name: ExcelSheet,
+  focusAddr?: string
+): Promise<void> => {
   try {
     const worksheets = context.workbook.worksheets;
     worksheets.load("items/name");

@@ -62,7 +62,7 @@ export const calcMode = createAsyncThunk<void, StatusPayload, { dispatch: AppDis
     if (context) {
       await calcModeHandler(context, calcMode);
     } else {
-      await Excel.run(async (context) => calcModeHandler(context, calcMode));
+      await Excel.run(async (context) => await calcModeHandler(context, calcMode));
     }
   }
 );
@@ -73,7 +73,7 @@ export const focusedSheet = createAsyncThunk<void, StatusPayload, { dispatch: Ap
     if (context) {
       await focusedSheetHandler(context);
     } else {
-      await Excel.run(async (context) => focusedSheetHandler(context));
+      await Excel.run(async (context) => await focusedSheetHandler(context));
     }
   }
 );
@@ -84,7 +84,7 @@ export const getModelSheets = createAsyncThunk<void, StatusPayload, { dispatch: 
     if (context) {
       await getModelSheetsHandler(context);
     } else {
-      await Excel.run(async (context) => getModelSheetsHandler(context));
+      await Excel.run(async (context) => await getModelSheetsHandler(context));
     }
   }
 );

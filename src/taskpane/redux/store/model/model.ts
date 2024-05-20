@@ -2,6 +2,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { stolog } from "../log";
 import { SheetStatus } from "./dtypes";
+import { ExcelSheet } from "../../../util/address";
 
 export interface ModelState {
   // Model setup
@@ -14,7 +15,6 @@ export interface ModelState {
 
   sheets: SheetStatus[];
   currentSheet: SheetStatus | undefined;
-  workbookOption: { displayLanguage: string };
   calculationType: Excel.CalculationType;
 }
 
@@ -25,7 +25,6 @@ const modelInit: ModelState = {
   displayLang: undefined,
   sheets: [],
   currentSheet: undefined,
-  workbookOption: { displayLanguage: "EN" },
   calculationType: Excel.CalculationType.full,
 };
 
@@ -38,7 +37,7 @@ export const modelSlice = createSlice({
       state.debugMode = !state.debugMode;
     },
     debug: (state) => {
-      console.log(state);
+      console.log({ ...state });
     },
     // Excel status actions
     language: (state) => {
@@ -47,15 +46,15 @@ export const modelSlice = createSlice({
       state.displayLang = lang;
     },
     // Sheet controlling actions
-    addSheet: (state, action: PayloadAction<{ name: string }>) => {
+    addSheet: (state, action: PayloadAction<{ name: ExcelSheet }>) => {
       stolog(state, `Adding sheet ${action.payload.name}`);
       state.sheets.push(action.payload);
     },
-    removeSheet: (state, action: PayloadAction<{ name: string }>) => {
+    removeSheet: (state, action: PayloadAction<{ name: ExcelSheet }>) => {
       stolog(state, `Removing sheet ${action.payload.name}`);
       state.sheets = state.sheets.filter((sheet) => sheet.name !== action.payload.name);
     },
-    focusSheet: (state, action: PayloadAction<{ name: string }>) => {
+    focusSheet: (state, action: PayloadAction<{ name: ExcelSheet }>) => {
       stolog(state, `Focused on ${action.payload.name}`);
     },
   },

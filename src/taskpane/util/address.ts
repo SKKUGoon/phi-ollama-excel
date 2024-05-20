@@ -47,3 +47,37 @@ export const CellPropDefault = {
     wrapText: true,
   },
 };
+
+export class QuantumParse {
+  static parseEngRange(input: string): string[][] {
+    const re = /[A-Z]+[0-9]+(?=:)|(?<=:)[A-Z]+[0-9]+|^[A-Z]+[0-9]+$/g;
+    const cellMatch = input.match(re);
+
+    if (!cellMatch) return [];
+
+    const cells = cellMatch.map((cell) => {
+      const match = cell.match(/([A-Z]+)([0-9]+)/);
+      if (!match) return ["", ""];
+      return [match[1], match[2]] as [string, string];
+    });
+
+    return cells;
+  }
+
+  static columnToIndex(colStr: string) {
+    let index = 0;
+    for (let i = 0; i < colStr.length; i++) {
+      const charCd = colStr.charCodeAt(i) - "A".charCodeAt(0) + 1;
+      index = index * 26 + charCd;
+    }
+    return index - 1; // Convert to 0 based index
+  }
+
+  static rowToIndex(rowStr: string) {
+    return parseInt(rowStr) - 1;
+  }
+}
+
+export class QuantumAddress {
+  constructor() {}
+}
