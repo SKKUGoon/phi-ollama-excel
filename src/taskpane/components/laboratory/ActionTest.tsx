@@ -4,6 +4,7 @@ import { Button, tokens, makeStyles } from "@fluentui/react-components";
 import { useAppDispatch } from "../../redux/store/hook";
 // import { focusSheet } from "../../redux/store/model/modelMethodSheet";
 import { modelSliceAction } from "../../redux/store/model/model";
+import { ModelOrder } from "../ai/modelconn";
 
 const useStyles = makeStyles({
   instructions: {
@@ -35,13 +36,15 @@ const ActionTest: React.FC = () => {
     // await Excel.run(async (context) => {
     //   try {
     //     console.log(`Action init`);
-    //     await dispatch(focusSheet({ context: context, name: "Some", address: "A1" }));
     //     console.log(`Action successfully ended`);
     //   } catch (err) {
     //     console.error(err);
     //   }
     // });
-    dispatch(modelSliceAction.language());
+    const mo = new ModelOrder();
+    mo.context("IGIS asset management recently had a massive layoff of 300. At 2024 05 22");
+    mo.ask("What is IGIS asset managment?");
+    mo.generate();
   };
 
   const viewStore = async () => {

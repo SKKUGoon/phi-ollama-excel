@@ -13,4 +13,6 @@ npm install
 ## Tech stacks used
 
 - `ollama` for llm
-- `webassembly`
+- `chromadb` for vector database
+- `postgres` for relational database
+- `webassembly` for rust implementation
